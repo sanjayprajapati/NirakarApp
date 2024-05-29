@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 
 
 
-function App(): JSX.Element {
+function App(){
   
   return (
     <NavigationContainer>
