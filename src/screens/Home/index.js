@@ -1,6 +1,6 @@
 // HomeScreen.js
 import React from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView ,StyleSheet } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const isHindi = true;
@@ -9,10 +9,10 @@ const HomeScreen = () => {
   return (
     <ScrollView className="flex-1 bg-white p-4">
       {/* Banner */}
-      <View className="items-center mb-6">
+      <View style={style.sectionContainer}>
         <Image
           source={require("../../assets/satsang_logo.png")}
-          className="w-24 h-24 mb-2"
+          style={style.imageWidhth}
           resizeMode="contain"
         />
         <Text className="text-xl font-bold text-red-700">
@@ -21,7 +21,7 @@ const HomeScreen = () => {
       </View>
 
       {/* Today's Offline Satsang Info */}
-      <View className="bg-orange-100 p-4 rounded-xl shadow mb-4">
+      <View style={style.sectionContainer}>
         <Text className="text-lg font-semibold mb-1">
           {isHindi ? "आज का सत्संग" : "Today's Satsang"}
         </Text>
@@ -31,7 +31,7 @@ const HomeScreen = () => {
       </View>
 
       {/* Zoom Satsang Status */}
-      <View className="bg-blue-100 p-4 rounded-xl shadow mb-4">
+      <View style={style.sectionContainer}>
         <Text className="text-lg font-semibold mb-1">
           {isHindi ? "ज़ूम सत्संग स्थिति" : "Zoom Satsang Status"}
         </Text>
@@ -41,7 +41,7 @@ const HomeScreen = () => {
       </View>
 
       {/* Next Major Event */}
-      <View className="bg-purple-100 p-4 rounded-xl shadow mb-4">
+      <View style={style.sectionContainer}>
         <Text className="text-lg font-semibold mb-1">
           {isHindi ? "अगला प्रमुख कार्यक्रम" : "Next Major Event"}
         </Text>
@@ -49,7 +49,7 @@ const HomeScreen = () => {
       </View>
 
       {/* Bhajan of the Day */}
-      <View className="bg-yellow-100 p-4 rounded-xl shadow mb-4">
+      <View style={style.sectionContainer}>
         <Text className="text-lg font-semibold mb-1">
           {isHindi ? "आज का भजन" : "Bhajan of the Day"}
         </Text>
@@ -57,7 +57,7 @@ const HomeScreen = () => {
       </View>
 
       {/* Quick Navigation Links */}
-      <View className="flex-row justify-between mb-6">
+      <View style={style.sectionContainer}>
         <TouchableOpacity className="bg-red-100 p-4 rounded-xl items-center w-[30%]">
           <MaterialCommunityIcons name="calendar-month-outline" size={24} color="#D32F2F" />
           <Text className="text-sm mt-1">{isHindi ? "कार्यक्रम" : "Events"}</Text>
@@ -73,7 +73,7 @@ const HomeScreen = () => {
       </View>
 
       {/* CTA Buttons */}
-      <View className="flex-row justify-between mb-10">
+      <View style={style.sectionContainer}>
         <TouchableOpacity className="bg-red-600 px-4 py-3 rounded-xl w-[30%] items-center">
           <MaterialCommunityIcons name="hand-heart" size={22} color="#fff" />
           <Text className="text-white mt-1">{isHindi ? "दान करें" : "Donate"}</Text>
@@ -92,3 +92,19 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
+const style=StyleSheet.create({
+  sectionContainer:{
+    display:"flex",
+    padding:20,
+    backgroundColor:'#fff',
+    boxShadowColor:'#ccc',
+    margin:5,
+    borderRadius:10,
+    borderWidth:1
+  },
+  imageWidhth: {
+    maxWidth:200,
+    height:200,
+  }
+
+})
