@@ -2,11 +2,13 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from '../screens/Home';
 import EventsScreen from '../screens/Events';
 import VideosScreen from '../screens/Videos';
 import QuotesScreen from '../screens/Quotes';
+import LoginScreen from '../screens/Login';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -15,12 +17,14 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { Text } from "react-native";
 
 const Tab = createBottomTabNavigator();
+//const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 const isHindi = true;
 
-export default function AppNavigator() {
+
+function BottomTabs() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
+    <Tab.Navigator
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
@@ -99,6 +103,47 @@ export default function AppNavigator() {
           }}
         />
       </Tab.Navigator>
+  );
+}
+function CustomDrawerContent({ navigation }) {
+  return (
+    <>
+      {/* Add profile header here if needed */}
+      <Text style={{ margin: 20, fontWeight: "bold" }}>Sanjay Kumar</Text>
+      <Text style={{ marginLeft: 20 }}>sanjay.prajapati80@gmail.com</Text>
+
+      {/* List of items */}
+      <Text onPress={() => {}} style={{ margin: 20 }}>📂 Recorded Sessions</Text>
+      <Text onPress={() => {}} style={{ margin: 20 }}>⬇️ My Downloads</Text>
+      <Text onPress={() => {}} style={{ margin: 20 }}>📚 My Library</Text>
+      <Text onPress={() => {}} style={{ margin: 20 }}>📖 All Books</Text>
+      <Text onPress={() => {}} style={{ margin: 20 }}>🎞️ My Video Series</Text>
+      <Text onPress={() => {}} style={{ margin: 20 }}>🎥 Video Series</Text>
+      <Text onPress={() => {}} style={{ margin: 20 }}>🎓 Scholarship</Text>
+      <Text onPress={() => {}} style={{ margin: 20 }}>🙏 Donate</Text>
+      <Text onPress={() => {}} style={{ margin: 20 }}>🌐 Website</Text>
+    </>
+  );
+}
+export default function AppNavigator() {
+  
+  return (
+    <NavigationContainer>
+      {/* <Drawer.Navigator
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
+        screenOptions={{
+          headerShown: false,
+          drawerPosition: "left",
+          drawerType: "front",
+        }}
+      >
+        <Drawer.Screen name="Main" component={BottomTabs} />
+      </Drawer.Navigator> */}
+      {/* <BottomTabs /> */}
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="MainApp" component={BottomTabs} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

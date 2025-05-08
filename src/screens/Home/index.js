@@ -1,12 +1,31 @@
 // HomeScreen.js
-import React from "react";
+import React,{useState } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView ,StyleSheet } from "react-native";
+import { Appbar, Menu } from 'react-native-paper';
+import { useTranslation} from "react-i18next";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import i18n from '../../../i18';
 const isHindi = true;
 
+
 const HomeScreen = () => {
+  const { t } = useTranslation();
+  const [visible, setVisible] = useState(false);
   return (
+    <>
+    <Appbar.Header>
+        <Appbar.Content  />
+        <Menu
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          anchor={
+            <Appbar.Action icon="menu" color="black" onPress={() => setVisible(true)} />
+          }
+        >
+          <Menu.Item onPress={() => console.log('Settings')} title="Settings" />
+          <Menu.Item onPress={() => console.log('Logout')} title="Logout" />
+        </Menu>
+      </Appbar.Header>
     <ScrollView className="flex-1 bg-white p-4">
       {/* Banner */}
       <View style={style.sectionContainer}>
@@ -15,9 +34,18 @@ const HomeScreen = () => {
           style={style.imageWidhth}
           resizeMode="contain"
         />
-        <Text className="text-xl font-bold text-red-700">
-          {isHindi ? "ॐ नमः शिवाय | जय गुरुदेव" : "Om Namah Shivaya | Jai Gurudev"}
+        
+        <Text style={style.bannerText}>
+          {isHindi ? "जय श्री महताब" : "Jai Shree Mahtab"}
         </Text>
+        <TouchableOpacity
+  className="self-end mb-3"
+  onPress={() => i18n.changeLanguage(i18n.language === "hi" ? "en" : "hi")}
+>
+  <Text className="text-blue-500 underline">
+    {i18n.language === "hi" ? "Switch to English" : "हिंदी में बदलें"}
+  </Text>
+</TouchableOpacity>
       </View>
 
       {/* Today's Offline Satsang Info */}
@@ -71,23 +99,41 @@ const HomeScreen = () => {
           <Text className="text-sm mt-1">{isHindi ? "ज्ञान" : "Gyaan"}</Text>
         </TouchableOpacity>
       </View>
+      {/* YouTube Videos */}
+      <View className="mb-4">
+        <Text className="text-lg font-semibold mb-2">🎥 नवीनतम वीडियो</Text>
+        <ScrollView horizontal>
+          <Image
+            source={{ uri: "https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg" }}
+            className="w-40 h-24 mr-2 rounded-xl"
+          />
+          <Image
+            source={{ uri: "https://img.youtube.com/vi/l9nh1l8ZIJQ/0.jpg" }}
+            className="w-40 h-24 mr-2 rounded-xl"
+          />
+        </ScrollView>
+      </View>
 
       {/* CTA Buttons */}
       <View style={style.sectionContainer}>
-        <TouchableOpacity className="bg-red-600 px-4 py-3 rounded-xl w-[30%] items-center">
+        <View style={style.InlineFlex}>
+        <TouchableOpacity >
           <MaterialCommunityIcons name="hand-heart" size={22} color="#fff" />
           <Text className="text-white mt-1">{isHindi ? "दान करें" : "Donate"}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="bg-orange-600 px-4 py-3 rounded-xl w-[30%] items-center">
+        </TouchableOpacity></View>
+        <View style={style.InlineFlex}>
+        <TouchableOpacity >
           <MaterialCommunityIcons name="account-group-outline" size={22} color="#fff" />
           <Text className="text-white mt-1">{isHindi ? "हमसे जुड़ें" : "Join Us"}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="bg-green-600 px-4 py-3 rounded-xl w-[30%] items-center">
+        </TouchableOpacity></View>
+        <View style={style.InlineFlex}> 
+        <TouchableOpacity >
           <MaterialCommunityIcons name="heart-circle-outline" size={22} color="#fff" />
           <Text className="text-white mt-1">{isHindi ? "सेवा करें" : "Serve"}</Text>
         </TouchableOpacity>
+        </View>
       </View>
-    </ScrollView>
+    </ScrollView></>
   );
 };
 
@@ -95,16 +141,29 @@ export default HomeScreen;
 const style=StyleSheet.create({
   sectionContainer:{
     display:"flex",
-    padding:20,
+    padding:21,
     backgroundColor:'#fff',
     boxShadowColor:'#ccc',
     margin:5,
     borderRadius:10,
-    borderWidth:1
+    borderWidth:1,
+    flexDirection:"row",
+    flexWrap:"wrap"
   },
   imageWidhth: {
-    maxWidth:200,
-    height:200,
+    width:'100%',
+    height:100,
+    marginBottom:10
+  },
+  bannerText: {
+    color:'#1e5b7d',
+    fontSize:28,
+    textAlign: 'center',
+    width:'100%'
+  },
+  InlineFlex: {
+    display:'inline-flex',
+    width:'28%'
   }
 
 })

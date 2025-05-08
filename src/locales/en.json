@@ -1,7 +1,12 @@
 {
-    "home": "Home",
-    "events": "Events",
-    "media": "Media",
-    "welcome": "Welcome to Satsang App"
-  }
-  
+  "welcome": "🙏 Welcome",
+  "description": "Welcome to Shri Mahatab Jankalyan Adhyatmik Satsang Samiti.",
+  "nextSatsang": "📍 Next Satsang",
+  "joinZoom": "Join on Zoom",
+  "viewLocation": "View Location",
+  "announcements": "📣 Announcements",
+  "latestVideos": "🎥 Latest Videos",
+  "donate": "Donate",
+  "joinUs": "Join Us",
+  "serve": "Serve"
+}
