@@ -13,7 +13,7 @@ const HomeScreen = () => {
   const [visible, setVisible] = useState(false);
   return (
     <>
-    <Appbar.Header>
+    {/* <Appbar.Header>
         <Appbar.Content  />
         <Menu
           visible={visible}
@@ -25,8 +25,8 @@ const HomeScreen = () => {
           <Menu.Item onPress={() => console.log('Settings')} title="Settings" />
           <Menu.Item onPress={() => console.log('Logout')} title="Logout" />
         </Menu>
-      </Appbar.Header>
-    <ScrollView className="flex-1 bg-white p-4">
+      </Appbar.Header> */}
+    <ScrollView className="flex-1 bg-white p-4" style={{padding:12,margin:0,backgroundColor:'#fee4b4'}}>
       {/* Banner */}
       <View style={style.sectionContainer}>
         <Image
@@ -42,25 +42,24 @@ const HomeScreen = () => {
   className="self-end mb-3"
   onPress={() => i18n.changeLanguage(i18n.language === "hi" ? "en" : "hi")}
 >
-  <Text className="text-blue-500 underline">
+  {/* <Text className="text-blue-500 underline">
     {i18n.language === "hi" ? "Switch to English" : "हिंदी में बदलें"}
-  </Text>
+  </Text> */}
 </TouchableOpacity>
       </View>
 
       {/* Today's Offline Satsang Info */}
+      <Text style={style.sectionHeading}>{isHindi ? "आज के कार्यक्रम" : "Today's Programs"}</Text>
       <View style={style.sectionContainer}>
-        <Text className="text-lg font-semibold mb-1">
-          {isHindi ? "आज का सत्संग" : "Today's Satsang"}
-        </Text>
-        <Text>{isHindi ? "स्थान: पनकी, कानपुर" : "Location: Panki, Kanpur"}</Text>
-        <Text>{isHindi ? "समय: शाम 6 बजे" : "Time: 6 PM"}</Text>
-        <Text>{isHindi ? "संपर्क: 9876543210" : "Contact: 9876543210"}</Text>
+        <View><Text style={style.subHeading}>{isHindi ? "आज का सत्संग" : "Today's Satsang"}</Text></View>
+        <Text style={style.text}>{isHindi ? "स्थान: पनकी, कानपुर" : "Location: Panki, Kanpur"}</Text>
+        <Text style={style.text}>{isHindi ? "समय: शाम 6 बजे" : "Time: 6 PM"}</Text>
+        <Text style={style.text}>{isHindi ? "संपर्क: 9876543210" : "Contact: 9876543210"}</Text>
       </View>
 
       {/* Zoom Satsang Status */}
       <View style={style.sectionContainer}>
-        <Text className="text-lg font-semibold mb-1">
+        <Text style={style.text}>
           {isHindi ? "ज़ूम सत्संग स्थिति" : "Zoom Satsang Status"}
         </Text>
         <Text className="text-green-700 font-bold">
@@ -139,16 +138,29 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 const style=StyleSheet.create({
+  text:{
+    fontSize:15,
+    color:'#000'
+ },
   sectionContainer:{
-    display:"flex",
-    padding:21,
-    backgroundColor:'#fff',
+    padding:12,
+    backgroundColor:'#fdd382',
     boxShadowColor:'#ccc',
-    margin:5,
-    borderRadius:10,
-    borderWidth:1,
-    flexDirection:"row",
-    flexWrap:"wrap"
+    marginBottom:20,
+    borderRadius:20,
+    borderWidth:0,
+  },
+  sectionHeading:{
+    fontSize:26,
+    fontWeight:'bold',
+    color:'#66390a',
+    marginBottom:15
+  },
+  subHeading:{
+    fontSize:20,
+    fontWeight:'bold',
+    color:'#1e5b7d',
+    marginBottom:8
   },
   imageWidhth: {
     width:'100%',

@@ -9,6 +9,7 @@ import EventsScreen from '../screens/Events';
 import VideosScreen from '../screens/Videos';
 import QuotesScreen from '../screens/Quotes';
 import LoginScreen from '../screens/Login';
+import VideoPlayerScreen  from "../screens/Videos/VideoPlayerScreen";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -140,9 +141,9 @@ export default function AppNavigator() {
         <Drawer.Screen name="Main" component={BottomTabs} />
       </Drawer.Navigator> */}
       {/* <BottomTabs /> */}
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>        
         <Stack.Screen name="MainApp" component={BottomTabs} />
+        <Stack.Screen name="VideoPlayer" component={VideoPlayerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
