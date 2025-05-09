@@ -1,10 +1,10 @@
-import { View, Text,Button,FlatList ,TouchableOpacity,Image, StyleSheet} from 'react-native'
+import { View, Text,Button,FlatList ,TouchableOpacity,Image, StyleSheet,ActivityIndicator } from 'react-native'
 import React, { useState,useEffect } from 'react'
 import { YOUR_CHANNEL_ID,YOUTUBE_API_KEY} from  '@env'
 
 export default function VideosScreen({navigation}) {
   const [videos,setVideos] =useState([])
-  
+  const [loading, setLoading] = useState(true);
   const fetchVideos = async () => {
     //console.log(`${YOUTUBE_API_KEY}`);
     const response = await fetch(
@@ -20,15 +20,26 @@ export default function VideosScreen({navigation}) {
       try {
         const fetchedVideos = await fetchVideos();
         setVideos(fetchedVideos);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching videos:", error);
+        setLoading(false);
       }
     };
 
     loadVideos();
   }, []);
+  // loading state to shwow activity indicator
+  if (loading) {
+    return (
+      <View style={style.loaderContainer}>
+        <ActivityIndicator size="large" color="#6200ee" />
+      </View>
+    );
+  }
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor:'#fee4b4' }}>
       <Text>Videos</Text>
       <FlatList
         data={videos}
@@ -63,4 +74,10 @@ const style= StyleSheet.create({
       fontSize:16,
       fontWeight:'bold',
       color:'#000'
-    }  })
+    },
+    loaderContainer:{
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center'
+    }
+  })
