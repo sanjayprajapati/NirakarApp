@@ -1,0 +1,23 @@
+// BhajanDetailScreen.js
+import React from "react";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+
+const BhajanDetailScreen = ({ route }) => {
+  console.log(route.params); 
+  const bhajan = route?.params?.bhajan;
+
+  return (
+    <ScrollView style={styles.container}>
+      
+      <Text style={styles.content}>{bhajan.content}</Text>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { padding: 20, backgroundColor: "#fff" },
+  title: { fontSize: 22, fontWeight: "bold", marginBottom: 10 },
+  content: { fontSize: 18, lineHeight: 26 },
+});
+
+export default BhajanDetailScreen;

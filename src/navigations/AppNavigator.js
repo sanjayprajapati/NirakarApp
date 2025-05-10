@@ -12,8 +12,10 @@ import LoginScreen from '../screens/Login';
 import VideoPlayerScreen  from "../screens/Videos/VideoPlayerScreen";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Entypo from 'react-native-vector-icons/Entypo';
-
+import BhajanListScreen from '../screens/Bhajan';
+import BhajanDetailScreen from '../screens/Bhajan/BhajanDetailScreen';
 
 import { Text } from "react-native";
 
@@ -90,6 +92,20 @@ function BottomTabs() {
           }}
         />
         <Tab.Screen
+          name="Bhajan"
+          component={BhajanListScreen}
+          options={{
+            tabBarLabel: ({ focused }) => <Text style={{
+                color: focused ? "#E53935" : "#900", // red theme
+                fontWeight: focused ? "bold" : "normal",
+                fontSize: 12,
+              }}>{isHindi ? "भजन" : "Bhajan"}</Text>,
+            tabBarIcon: ({ color, size,focused }) => (
+                <FontAwesome5 name="book" color={focused ? '#E53935' : '#900'} size={22} />
+              ),
+          }}
+        />
+        <Tab.Screen
           name="Quotes"
           component={QuotesScreen}
           options={{
@@ -144,6 +160,7 @@ export default function AppNavigator() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>        
         <Stack.Screen name="MainApp" component={BottomTabs} />
         <Stack.Screen name="VideoPlayer" component={VideoPlayerScreen} />
+        <Stack.Screen name="BhajanDetailScreen" component={BhajanDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
