@@ -1,40 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, Dimensions, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
-
-const { width, height } = Dimensions.get('window');
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, StyleSheet, Dimensions, ActivityIndicator,ImageBackground } from "react-native";
+import { API_URL } from '@env';
+const { width, height } = Dimensions.get("window");
 
 const QuotesScreen = () => {
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const defaultImage = "../../assets/justtest.jpg";
   useEffect(() => {
-  const getQuotes = async () => {
-    try {
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-      const data = await response.json();
-      console.log(data); // Check what's coming
-      setQuotes(data.results);
-      setLoading(false);
-    } catch (error) {
-      console.error("API ERROR:", error);
-    }
-  };
-  getQuotes();
-}, []);
+    fetch(`http://192.168.43.3:5000/api/v1/quotes`)
+      .then(res => res.json())
+      .then(data => {
+        setQuotes(data);
+        setLoading(false);
+      })
+      .catch(err => { 
+        console.log("Error fetching quotes:", err);
+        setLoading(false);
+      });
+  }, []);
 
-  const renderItem = ({ item }) => (
-    <ImageBackground source={{ uri: 'https://source.unsplash.com/random' }} style={styles.card}>
-      <View style={styles.overlay}>
-        <Text style={styles.text}>{item}</Text>
-        <Text style={styles.author}>— {item.author}</Text>
-      </View>
-    </ImageBackground>
-  );
+ const renderItem = ({ item }) => {
+    const image = item.image || defaultImage;
+
+    return (
+      <ImageBackground
+        source={require("../../assets/justtest.jpg")}
+        style={{
+          width,
+          height,
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 20,
+        }}
+        resizeMode="cover"
+      >
+        <View
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: "rgba(0, 0, 0, 0.4)", // semi-dark overlay
+        }}></View>
+        <Text style={{ fontSize: 24, color: "#fff", textAlign: "center" }}>"{item.text}"</Text>
+        <Text style={{ fontSize: 18, color: "#fff", marginTop: 10 }}>— {item.author || "Anonymous"}</Text>
+      </ImageBackground>
+    );
+  };
 
   if (loading) {
     return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#6200ee" />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#000" />
       </View>
     );
   }
@@ -42,43 +57,40 @@ const QuotesScreen = () => {
   return (
     <FlatList
       data={quotes}
-      keyExtractor={(_, index) => index.toString()}
       horizontal
       pagingEnabled
-      renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
+      keyExtractor={(item, index) => item._id || index.toString()}
+      renderItem={renderItem}
     />
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    width,
+  quoteContainer: {
     height,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 24,
+    backgroundColor: "#fefefe",
   },
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    padding: 20,
-    borderRadius: 10,
+  quoteText: {
+    fontSize: 22,
+    fontStyle: "italic",
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#333",
   },
-  text: {
-    fontSize: 24,
-    color: '#fff',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  author: {
+  authorText: {
     fontSize: 18,
-    color: '#ddd',
-    textAlign: 'center',
+    textAlign: "center",
+    color: "#666",
   },
-  loaderContainer: {
+  loader: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default QuotesScreen;

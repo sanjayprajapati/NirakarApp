@@ -6,10 +6,18 @@ const BhajanDetailScreen = ({ route }) => {
   console.log(route.params); 
   const bhajan = route?.params?.bhajan;
 
+ if (!bhajan) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>कोई भजन चयनित नहीं किया गया है।</Text>
+      </View>
+    );
+  }
+
   return (
-    <ScrollView style={styles.container}>
-      
-      <Text style={styles.content}>{bhajan.content}</Text>
+    <ScrollView style={{ padding: 16 }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{bhajan.title}</Text>
+      <Text style={{ marginTop: 12 }}>{bhajan.content}</Text>
     </ScrollView>
   );
 };

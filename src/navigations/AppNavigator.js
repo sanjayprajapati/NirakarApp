@@ -18,6 +18,7 @@ import BhajanListScreen from '../screens/Bhajan';
 import BhajanDetailScreen from '../screens/Bhajan/BhajanDetailScreen';
 
 import { Text } from "react-native";
+import BhajanStack from "../screens/Bhajan/BhajanStack";
 
 const Tab = createBottomTabNavigator();
 //const Drawer = createDrawerNavigator();
@@ -93,7 +94,7 @@ function BottomTabs() {
         />
         <Tab.Screen
           name="Bhajan"
-          component={BhajanListScreen}
+          component={BhajanStack}
           options={{
             tabBarLabel: ({ focused }) => <Text style={{
                 color: focused ? "#E53935" : "#900", // red theme
@@ -160,7 +161,6 @@ export default function AppNavigator() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>        
         <Stack.Screen name="MainApp" component={BottomTabs} />
         <Stack.Screen name="VideoPlayer" component={VideoPlayerScreen} />
-        <Stack.Screen name="BhajanDetailScreen" component={BhajanDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

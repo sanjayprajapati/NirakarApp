@@ -8,11 +8,11 @@ import axios from "axios";
 const BhajanListScreen = ({ navigation }) => {
     const [bhajans, setBhajan] = useState([]);
     const [loading, setLoading] = useState(true);
-     
+     console.log(API_URL)
     useEffect(() => {
       const getBhajans = async () => {
         try {
-            const response = await axios.get(`${API_URL}/all-bhajans?page=1`, {
+            const response = await axios.get(`http://192.168.43.3:5000/api/v1/all-bhajans?page=1`, {
             headers: {
                 'Content-Type': 'application/json',
                 // Add other headers if required
@@ -46,7 +46,7 @@ if (loading) {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.item}
-            onPress={() => navigation.navigate("BhajanDetailScreen", { bhajan: item })}
+            onPress={() => navigation.navigate("BhajanDetail", { bhajan: item })}
           >
             <Text style={styles.title}>{item.title}</Text>
           </TouchableOpacity>

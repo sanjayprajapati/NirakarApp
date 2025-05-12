@@ -1,8 +1,8 @@
 // BhajanStack.js
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import BhajanListScreen from './BhajanDetailScreen'
-import BhajanDetailScreen from "./";
+import BhajanListScreen from './'
+import BhajanDetailScreen from "./BhajanDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
