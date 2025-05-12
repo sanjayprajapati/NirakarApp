@@ -11,7 +11,7 @@ export default function VideosScreen({navigation}) {
       `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${YOUR_CHANNEL_ID}&part=snippet,id&order=date&maxResults=10`
     );
     const data = await response.json();
-    console.log(data.items)
+   // console.log(data.items)
     return data.items;
   };
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function VideosScreen({navigation}) {
         data={videos}
         keyExtractor={(item) => item.id.videoId}
         renderItem={({ item }) => {
-          console.log("Rendering item:", item.snippet.thumbnails.medium.url);
+        //console.log("Rendering item:", item.snippet.thumbnails.medium.url);
         return(
           <View style={style.IMageContainer}> 
           <TouchableOpacity onPress={() =>

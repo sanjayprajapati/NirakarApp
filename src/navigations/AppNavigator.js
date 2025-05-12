@@ -6,7 +6,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from '../screens/Home';
 import EventsScreen from '../screens/Events';
-import VideosScreen from '../screens/Videos';
+import VideoStack from '../screens/Videos/VideoStack'
 import QuotesScreen from '../screens/Quotes';
 import LoginScreen from '../screens/Login';
 import VideoPlayerScreen  from "../screens/Videos/VideoPlayerScreen";
@@ -80,7 +80,7 @@ function BottomTabs() {
         />
         <Tab.Screen
           name="Videos"
-          component={VideosScreen}
+          component={VideoStack}
           options={{
             tabBarLabel: ({ focused }) => <Text style={{
                 color: focused ? "#E53935" : "#900", // red theme
@@ -160,7 +160,6 @@ export default function AppNavigator() {
       {/* <BottomTabs /> */}
       <Stack.Navigator screenOptions={{ headerShown: false }}>        
         <Stack.Screen name="MainApp" component={BottomTabs} />
-        <Stack.Screen name="VideoPlayer" component={VideoPlayerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
