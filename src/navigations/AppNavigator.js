@@ -21,7 +21,7 @@ import { Text } from "react-native";
 import BhajanStack from "../screens/Bhajan/BhajanStack";
 
 const Tab = createBottomTabNavigator();
-//const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 const isHindi = true;
 
@@ -147,20 +147,17 @@ export default function AppNavigator() {
   
   return (
     <NavigationContainer>
-      {/* <Drawer.Navigator
-        drawerContent={(props) => <CustomDrawerContent {...props} />}
-        screenOptions={{
-          headerShown: false,
-          drawerPosition: "left",
-          drawerType: "front",
-        }}
-      >
-        <Drawer.Screen name="Main" component={BottomTabs} />
-      </Drawer.Navigator> */}
+      <Drawer.Navigator initialRouteName="BottomTabs">
+        <Drawer.Screen name="BottomTabs" component={BottomTabs} options={{ title: 'होम' }} />
+        <Drawer.Screen name="About" component={EventsScreen} options={{ title: 'एप्प के बारे में' }} />
+        <Drawer.Screen name="Settings" component={EventsScreen} options={{ title: 'सेटिंग्स' }} />
+        <Drawer.Screen name="Profile" component={EventsScreen} options={{ title: 'प्रोफाइल' }} />
+        <Drawer.Screen name="Logout" component={EventsScreen} options={{ title: 'लॉगआउट' }} />
+      </Drawer.Navigator>
       {/* <BottomTabs /> */}
-      <Stack.Navigator screenOptions={{ headerShown: false }}>        
+      {/* <Stack.Navigator screenOptions={{ headerShown: false }}>        
         <Stack.Screen name="MainApp" component={BottomTabs} />
-      </Stack.Navigator>
+      </Stack.Navigator> */}
     </NavigationContainer>
   );
 }

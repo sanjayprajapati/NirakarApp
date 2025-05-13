@@ -10,5 +10,6 @@ module.exports = {
         allowUndefined: false,
       },
     ],
+    'react-native-reanimated/plugin', // 👈 ये सबसे आखिर में हो
   ],
 };
