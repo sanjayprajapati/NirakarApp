@@ -1,16 +1,57 @@
 // HomeScreen.js
-import React,{useState } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView ,StyleSheet } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, ActivityIndicator, Image, StyleSheet , ScrollView ,TouchableOpacity} from 'react-native';
 import { Appbar, Menu } from 'react-native-paper';
 import { useTranslation} from "react-i18next";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import i18n from '../../../i18';
+import { API_URL } from '@env';
+import { client } from '../../api/apiBase';
 const isHindi = true;
 
+//const API_URL = 'http://192.168.1.185:5000/api/v1/events'; // eg. http://192.168.1.5:5000
 
 const HomeScreen = () => {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await client(`/events`);
+      ;
+      console.log('response.data',response.data)
+      setEvents(response.data.result); // adjust key as per your response
+      setLoading(false)
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    } 
+  };
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const renderItem = ({ item }) => (
+    <View style={style.card}>
+      {item.banner && (
+        <Image source={{ uri: item.banner }} style={style.image} />
+      )}
+      <Text style={style.title}>{item.name}</Text>
+      <Text>{item.date?.slice(0, 10)} | {item.time}</Text>
+      <Text>{item.place}</Text>
+      <Text>{item.organizer}</Text>
+    </View>
+  );
+
+  if (loading) {
+      return (
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <ActivityIndicator size="large" color="#000" />
+        </View>
+      );
+    }
+
   return (
     <>
     {/* <Appbar.Header>
@@ -59,12 +100,18 @@ const HomeScreen = () => {
 
       {/* Zoom Satsang Status */}
       <View style={style.sectionContainer}>
-        <Text style={style.text}>
-          {isHindi ? "ज़ूम सत्संग स्थिति" : "Zoom Satsang Status"}
-        </Text>
-        <Text className="text-green-700 font-bold">
-          {isHindi ? "LIVE चल रहा है" : "LIVE Now"}
-        </Text>
+        { events.map((item) => (
+        <View key={item._id} style={style.card}>
+          {item.banner ? (
+            <Image source={{ uri: item.banner }} style={style.image} />
+          ) : null}
+          <Text style={style.title}>{item.name}</Text>
+          <Text style={style.dateTime}>{item.date?.slice(0, 10)} | {item.time}</Text>
+          <Text style={style.place}>{item.place}</Text>
+          <Text style={style.organizer}>आयोजक: {item.organizer}</Text>
+          <Text style={style.category}>श्रेणी: {item.category}</Text>
+        </View>
+      ))}
       </View>
 
       {/* Next Major Event */}
@@ -176,6 +223,22 @@ const style=StyleSheet.create({
   InlineFlex: {
     display:'inline-flex',
     width:'28%'
+  },
+   card: {
+    backgroundColor: '#f9f9f9',
+    padding: 12,
+    marginBottom: 12,
+    borderRadius: 8,
+    elevation: 3,
+  },
+  image: {
+    height: 0,
+    borderRadius: 6,
+    marginBottom: 8,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
   }
 
 })

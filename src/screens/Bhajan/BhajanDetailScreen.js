@@ -15,8 +15,8 @@ const BhajanDetailScreen = ({ route }) => {
   }
 
   return (
-    <ScrollView style={{ padding: 16 }}>
-      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{bhajan.title}</Text>
+    <ScrollView style={{ paddingTop:10,paddingBottom:10,paddingLeft:15,paddingRight:5 }}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{bhajan.title}</Text>
       <Text style={{ marginTop: 12 }}>{bhajan.content}</Text>
     </ScrollView>
   );

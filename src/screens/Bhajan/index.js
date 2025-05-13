@@ -4,15 +4,15 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet,ActivityIndicator } 
 
 import { API_URL } from '@env';
 import axios from "axios";
-
+import { client } from "../../api/apiBase";
 const BhajanListScreen = ({ navigation }) => {
     const [bhajans, setBhajan] = useState([]);
     const [loading, setLoading] = useState(true);
-     console.log(API_URL)
+     console.log(API_URL,client)
     useEffect(() => {
       const getBhajans = async () => {
         try {
-            const response = await axios.get(`http://192.168.43.3:5000/api/v1/all-bhajans?page=1`, {
+            const response = await client.get(`/all-bhajans?page=1`, {
             headers: {
                 'Content-Type': 'application/json',
                 // Add other headers if required

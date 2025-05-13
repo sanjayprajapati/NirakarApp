@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, Dimensions, ActivityIndicator,ImageBackground } from "react-native";
 import { API_URL } from '@env';
+import { client } from "../../api/apiBase";
 const { width, height } = Dimensions.get("window");
 
 const QuotesScreen = () => {
@@ -8,16 +9,24 @@ const QuotesScreen = () => {
   const [loading, setLoading] = useState(true);
   const defaultImage = "../../assets/justtest.jpg";
   useEffect(() => {
-    fetch(`http://192.168.43.3:5000/api/v1/quotes`)
-      .then(res => res.json())
-      .then(data => {
-        setQuotes(data);
-        setLoading(false);
-      })
-      .catch(err => { 
-        console.log("Error fetching quotes:", err);
-        setLoading(false);
-      });
+    console.log(API_URL)
+    const getEvents = async () => {
+            try {
+                const response = await client.get(`/quotes`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                });
+                console.log(response.data);
+                setQuotes(response.data)
+                setLoading(false)
+            } catch (error) {
+                console.error('Network Error:', error.message);
+            }
+           
+          };
+          getEvents();
+   
   }, []);
 
  const renderItem = ({ item }) => {
