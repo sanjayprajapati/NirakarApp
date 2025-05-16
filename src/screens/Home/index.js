@@ -7,6 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import i18n from '../../../i18';
 import { API_URL } from '@env';
 import { client } from '../../api/apiBase';
+import VideoPlayer from '../../components/VideoPlayer';
 const isHindi = true;
 
 //const API_URL = 'http://192.168.1.185:5000/api/v1/events'; // eg. http://192.168.1.5:5000
@@ -115,6 +116,7 @@ const HomeScreen = () => {
       </View>
 
       {/* Next Major Event */}
+      <VideoPlayer />
       <View style={style.sectionContainer}>
         <Text className="text-lg font-semibold mb-1">
           {isHindi ? "अगला प्रमुख कार्यक्रम" : "Next Major Event"}
