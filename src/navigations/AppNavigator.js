@@ -19,6 +19,7 @@ import BhajanDetailScreen from '../screens/Bhajan/BhajanDetailScreen';
 
 import { Text } from "react-native";
 import BhajanStack from "../screens/Bhajan/BhajanStack";
+import HomeStack from "../screens/Home/HomeStack";
 
 const Tab = createBottomTabNavigator();
 //const Drawer = createDrawerNavigator();
@@ -52,7 +53,7 @@ function BottomTabs() {
       >
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={HomeStack}
           options={{
             tabBarLabel: ({ focused }) => <Text style={{
                 color: focused ? "#E53935" : "#900", // red theme

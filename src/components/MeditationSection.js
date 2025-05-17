@@ -50,7 +50,7 @@ const MeditationSection = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.card}>
       <Text style={styles.title}>🧘‍♂️ ध्यान सत्र</Text>
       <Text style={styles.subtitle}>सुबह 4–5 बजे</Text>
 
@@ -70,6 +70,14 @@ const MeditationSection = () => {
 };
 
 const styles = StyleSheet.create({
+     card: {
+    backgroundColor: '#eef6ff',
+    borderRadius: 12,
+    padding: 16,
+    marginVertical: 10,
+    marginHorizontal: 5,
+    elevation: 3,
+  },
   container: {
     backgroundColor: '#fff',
     padding: 20,
