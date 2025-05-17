@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import Video from 'react-native-video';
 const VideoPlayer = () => {
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(true);
   // Replace with your server video URL
   const videoUrl = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
