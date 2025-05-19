@@ -4,23 +4,24 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from '../screens/Home';
+
 import EventsScreen from '../screens/Events';
 import VideoStack from '../screens/Videos/VideoStack'
 import QuotesScreen from '../screens/Quotes';
-import LoginScreen from '../screens/Login';
-import VideoPlayerScreen  from "../screens/Videos/VideoPlayerScreen";
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Entypo from 'react-native-vector-icons/Entypo';
-import BhajanListScreen from '../screens/Bhajan';
-import BhajanDetailScreen from '../screens/Bhajan/BhajanDetailScreen';
 
-import { Text } from "react-native";
+
+import { Text ,ActivityIndicator, View} from "react-native";
 import BhajanStack from "../screens/Bhajan/BhajanStack";
 import HomeStack from "../screens/Home/HomeStack";
-
+import ReflectionFeedScreen from "../screens/Reflections/ReflectionFeedScreen";
+import EnterMobileScreen from '../screens/Login/EnterMobileScreen';
+import OtpVerificationScreen from '../screens/Login/OtpVerificationScreen';
+import { useAuth } from '../context/Authcontext';
 const Tab = createBottomTabNavigator();
 //const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -79,6 +80,16 @@ function BottomTabs() {
               ),
           }}
         />
+        <Tab.Screen name="Reflections" component={ReflectionFeedScreen} options={{
+            tabBarLabel: ({ focused }) => <Text style={{
+                color: focused ? "#E53935" : "#900", // red theme
+                fontWeight: focused ? "bold" : "normal",
+                fontSize: 12,
+              }} >{isHindi ? "चिंतन" : "Reflections"}</Text>,
+            tabBarIcon: ({ color, size, focused }) => (
+                <MaterialCommunityIcons name="brain" color={focused ? '#E53935' : '#900'} size={22} />
+              ),
+          }} />
         <Tab.Screen
           name="Videos"
           component={VideoStack}
@@ -124,28 +135,19 @@ function BottomTabs() {
       </Tab.Navigator>
   );
 }
-function CustomDrawerContent({ navigation }) {
-  return (
-    <>
-      {/* Add profile header here if needed */}
-      <Text style={{ margin: 20, fontWeight: "bold" }}>Sanjay Kumar</Text>
-      <Text style={{ marginLeft: 20 }}>sanjay.prajapati80@gmail.com</Text>
 
-      {/* List of items */}
-      <Text onPress={() => {}} style={{ margin: 20 }}>📂 Recorded Sessions</Text>
-      <Text onPress={() => {}} style={{ margin: 20 }}>⬇️ My Downloads</Text>
-      <Text onPress={() => {}} style={{ margin: 20 }}>📚 My Library</Text>
-      <Text onPress={() => {}} style={{ margin: 20 }}>📖 All Books</Text>
-      <Text onPress={() => {}} style={{ margin: 20 }}>🎞️ My Video Series</Text>
-      <Text onPress={() => {}} style={{ margin: 20 }}>🎥 Video Series</Text>
-      <Text onPress={() => {}} style={{ margin: 20 }}>🎓 Scholarship</Text>
-      <Text onPress={() => {}} style={{ margin: 20 }}>🙏 Donate</Text>
-      <Text onPress={() => {}} style={{ margin: 20 }}>🌐 Website</Text>
-    </>
-  );
-}
 export default function AppNavigator() {
-  
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
+
+
   return (
     <NavigationContainer>
       {/* <Drawer.Navigator
@@ -159,8 +161,21 @@ export default function AppNavigator() {
         <Drawer.Screen name="Main" component={BottomTabs} />
       </Drawer.Navigator> */}
       {/* <BottomTabs /> */}
-      <Stack.Navigator screenOptions={{ headerShown: false }}>        
-        <Stack.Screen name="MainApp" component={BottomTabs} />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {!user ? (
+        // Guest Stack
+        <>
+          <Stack.Screen name="EnterMobile" component={EnterMobileScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="OtpVerification" component={OtpVerificationScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="MainApp" component={BottomTabs} />
+        </>
+      ) : (
+        // Authenticated Stack
+        <>
+          <Stack.Screen name="MainApp" component={BottomTabs} />
+        </>
+      )}
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
