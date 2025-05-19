@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet,Image,KeyboardAvoidingView ,ActivityIndicator,TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  Alert,
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import axios from 'axios';
-import { useAuth } from '../../context/Authcontext'; // adjust path if needed
-import { client } from '../../api/apiBase';
+import {useAuth} from '../../context/Authcontext'; // adjust path if needed
+import {client} from '../../api/apiBase';
 
-const VerifyOtpScreen = ({ route }) => {
-  const { mobile } = route.params;
+const VerifyOtpScreen = ({route}) => {
+  const {mobile} = route.params;
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const {login} = useAuth();
 
   const handleVerify = async () => {
     if (!otp || otp.length !== 6) {
@@ -24,20 +35,28 @@ const VerifyOtpScreen = ({ route }) => {
       });
 
       const token = res.data.token;
-      console.log('token',token)
+      console.log('token', token);
       // Use login from AuthContext to save token + fetch user
       await login(token);
     } catch (err) {
       console.error('OTP verify failed:', err.response?.data || err.message);
-      Alert.alert('Verification Failed', err.response?.data?.message || 'Invalid OTP');
+      Alert.alert(
+        'Verification Failed',
+        err.response?.data?.message || 'Invalid OTP',
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <Image source={require('../../assets/satsang_logo.png')} style={styles.logo} />
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <Image
+        source={require('../../assets/satsang_logo.png')}
+        style={styles.logo}
+      />
       <Text style={styles.label}>Enter OTP sent to {mobile}</Text>
       <TextInput
         style={styles.input}
@@ -47,14 +66,17 @@ const VerifyOtpScreen = ({ route }) => {
         value={otp}
         onChangeText={setOtp}
       />
-      
-      <TouchableOpacity style={styles.button} onPress={handleVerify} disabled={loading}>
-              {loading ? (
-                <ActivityIndicator color="#fff" />
-              ) : (
-                <Text style={styles.buttonText}>सत्यापित करें </Text>
-              )}
-            </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleVerify}
+        disabled={loading}>
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>सत्यापित करें </Text>
+        )}
+      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 };
@@ -84,13 +106,13 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginBottom: 30,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   button: {
     backgroundColor: '#007AFF',
     padding: 14,
     borderRadius: 12,
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  buttonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' }
+  buttonText: {color: '#fff', fontSize: 18, fontWeight: 'bold'},
 });

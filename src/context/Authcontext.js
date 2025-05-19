@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const token = await AsyncStorage.getItem('token');
         if (token) {
-          const res = await client.get('/user/me-mobile', {
+          const res = await client.get('/user/me', {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(res.data.user);
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (token) => {
     try {
       await AsyncStorage.setItem('token', token);
-      const res = await client.get('/user/me-mobile', {
+      const res = await client.get('/user/me', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data.user);
